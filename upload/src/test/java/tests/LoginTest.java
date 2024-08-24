@@ -40,7 +40,7 @@ public class LoginTest {
 
         if ("remote".equalsIgnoreCase(executionMode)) {
             // Remote WebDriver
-            URL gridUrl = new URL(props.getProperty("webdriver.remote.url", "http://localhost:4444/wd/hub"));
+            URL gridUrl = new URL(props.getProperty("webdriver.remote.url", "http://selenium-hub:4444/wd/hub"));
             DesiredCapabilities capabilities = new DesiredCapabilities();
             capabilities.setBrowserName("chrome");
             driver = new RemoteWebDriver(gridUrl, capabilities);
