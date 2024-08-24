@@ -1,11 +1,14 @@
 name: Java Selenium Tests
-'on':
+
+on:
   push:
     branches:
       - main
+
 jobs:
   build-and-test:
     runs-on: ubuntu-latest
+
     services:
       selenium-hub:
         image: 'selenium/hub:latest'
@@ -13,40 +16,45 @@ jobs:
           - '4444:4444'
           - '4443:4443'
           - '4442:4442'
+
       chrome:
         image: 'selenium/node-chrome:latest'
-    tty: false
-    stdin_open: false
-    shm_size: 2gb
-    depends_on:
-      - selenium-hub
-    environment:
-      - SE_EVENT_BUS_HOST=selenium-hub
-      - SE_EVENT_BUS_PUBLISH_PORT=4442
-      - SE_EVENT_BUS_SUBSCRIBE_PORT=4443
-      - NODE_MAX_INSTANCES=3
-      - NODE_MAX_SESSION=3
+        ports:
+          - '5900:5900' # Add this if you need to access the VNC server
+        options: --shm-size 2g
+        env:
+          SE_EVENT_BUS_HOST: selenium-hub
+          SE_EVENT_BUS_PUBLISH_PORT: 4442
+          SE_EVENT_BUS_SUBSCRIBE_PORT: 4443
+          NODE_MAX_INSTANCES: 3
+          NODE_MAX_SESSION: 3
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
+
       - name: Set up JDK
         uses: actions/setup-java@v3
         with:
           java-version: '11'
           distribution: temurin
+
       - name: Cache Maven packages
         uses: actions/cache@v3
         with:
           path: ~/.m2/repository
-          key: '${{ runner.os }}-maven-${{ hashFiles(''**/pom.xml'') }}'
+          key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
           restore-keys: |
             ${{ runner.os }}-maven-
+
       - name: Build and test with Maven
         run: |
           cd upload # Navigate to the directory containing pom.xml
           mvn clean test
+
       - name: List directory contents
         run: ls -R upload/target
+
       - name: Upload test results
         if: always()
         uses: actions/upload-artifact@v4
