@@ -18,7 +18,7 @@ jobs:
           - '4442:4442'
 
       chrome:
-        image: 'selenium/node-chrome:latest'
+        image: 'selenium/node-chromium:latest'
         ports:
           - '5900:5900' # Add this if you need to access the VNC server
         options: --shm-size 2g
