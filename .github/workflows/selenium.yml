@@ -11,12 +11,12 @@ jobs:
 
     services:
       selenium-hub:
-        image: selenium/hub:4.12.0
+        image: selenium/hub:latest
         ports:
           - 4444:4444
 
       chrome:
-        image: selenium/node-chrome:4.12.0
+        image: selenium/node-chrome:beta
         ports:
           - 5900:5900
         options: --shm-size 2g
@@ -24,14 +24,7 @@ jobs:
           HUB_HOST: selenium-hub
           HUB_PORT: 4444
 
-      firefox:
-        image: selenium/node-firefox:4.12.0
-        ports:
-          - 5901:5901
-        options: --shm-size 2g
-        env:
-          HUB_HOST: selenium-hub
-          HUB_PORT: 4444
+      
 
     steps:
     - name: Checkout code
