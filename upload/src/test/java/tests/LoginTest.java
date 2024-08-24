@@ -46,7 +46,9 @@ public class LoginTest {
             driver = new RemoteWebDriver(gridUrl, capabilities);
         } else {
             // Local WebDriver
-           driver = new ChromeDriver();
+           ChromeOptions options = new ChromeOptions();
+            options.addArguments("--headless");
+           driver = new ChromeDriver(options);
         }
         driver.manage().window().maximize();
         driver.get(props.getProperty("url"));
