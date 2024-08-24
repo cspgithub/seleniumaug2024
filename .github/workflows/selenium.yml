@@ -46,7 +46,7 @@ jobs:
 
     - name: Build and test with Maven
       run: |
-        cd seleniumloginframework\upload\pom.xml # Navigate to the directory containing pom.xml
+        cd seleniumloginframework/upload/pom.xml # Navigate to the directory containing pom.xml
         mvn clean test
 
     - name: Upload test results
