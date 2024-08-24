@@ -18,14 +18,13 @@ jobs:
           - 4442:4442
 
       chrome:
-        image: selenium/node-chrome-debug
+        image: selenium/node-chrome:latest
         ports:
-          - 5901:5900
+          - 5900:5900
         options: --shm-size 2g
         env:
           HUB_HOST: selenium-hub
           HUB_PORT: 4444
-            
 
     steps:
     - name: Checkout code
@@ -50,9 +49,12 @@ jobs:
         cd upload # Navigate to the directory containing pom.xml
         mvn clean test
 
+    - name: List directory contents
+      run: ls -R upload/target
+
     - name: Upload test results
       if: always()
       uses: actions/upload-artifact@v3
       with:
         name: test-results
-        path: target/surefire-reports/
+        path: upload/target/surefire-reports/
