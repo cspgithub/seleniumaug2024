@@ -9,25 +9,7 @@ jobs:
   build-and-test:
     runs-on: ubuntu-latest
 
-    services:
-      selenium-hub:
-        image: 'selenium/hub:latest'
-        ports:
-          - '4444:4444'
-          - '4443:4443'
-          - '4442:4442'
-
-      chrome:
-        image: 'selenium/node-chrome:latest'
-        ports:
-          - '5900:5900' # Add this if you need to access the VNC server
-        options: --shm-size 2g
-        env:
-          SE_EVENT_BUS_HOST: selenium-hub
-          SE_EVENT_BUS_PUBLISH_PORT: 4442
-          SE_EVENT_BUS_SUBSCRIBE_PORT: 4443
-          NODE_MAX_INSTANCES: 3
-          NODE_MAX_SESSION: 3
+    
 
     steps:
       - name: Checkout code
@@ -38,6 +20,9 @@ jobs:
         with:
           java-version: '11'
           distribution: temurin
+      - uses: browser-actions/setup-chrome@latest
+      - run:  chrome --version
+        
 
       - name: Cache Maven packages
         uses: actions/cache@v4
