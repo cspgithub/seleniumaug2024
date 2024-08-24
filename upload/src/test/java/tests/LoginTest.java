@@ -10,6 +10,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.testng.Assert;
@@ -40,6 +41,7 @@ public class LoginTest {
 
         if ("remote".equalsIgnoreCase(executionMode)) {
             // Remote WebDriver
+            System.out.println("adrdes....."+props.getProperty("webdriver.remote.url"));
             URL gridUrl = new URL(props.getProperty("webdriver.remote.url", "http://selenium-hub:4444/wd/hub"));
             DesiredCapabilities capabilities = new DesiredCapabilities();
             capabilities.setBrowserName("chrome");
