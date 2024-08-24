@@ -14,17 +14,18 @@ jobs:
         image: selenium/hub:latest
         ports:
           - 4444:4444
+          - 4443:4443
+          - 4442:4442
 
       chrome:
-        image: selenium/node-chrome:beta
+        image: selenium/node-chrome-debug
         ports:
-          - 5900:5900
+          - 5901:5900
         options: --shm-size 2g
         env:
           HUB_HOST: selenium-hub
           HUB_PORT: 4444
-
-      
+            
 
     steps:
     - name: Checkout code
